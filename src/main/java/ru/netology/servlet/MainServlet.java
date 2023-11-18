@@ -9,6 +9,14 @@ import ru.netology.repository.PostRepository;
 public class MainServlet extends HttpServlet {
   private PostController controller;
 
+  public static final String APPLICATION_JSON = "application/json";
+  private static final String GET = "GET";
+  private static final String POST = "POST";
+  private static final String DELETE = "DELETE";
+  private static final String POSTS_PATH = "/api/posts";
+  private static final String POST_PATH = "/api/posts/\\d+";
+  private static final String DELIMITER = "/";
+
   @Override
   public void init() {
     final var repository = new PostRepository();
@@ -18,28 +26,28 @@ public class MainServlet extends HttpServlet {
 
   @Override
   protected void service(HttpServletRequest req, HttpServletResponse resp) {
-    // если деплоились в root context, то достаточно этого
+
     try {
       final var path = req.getRequestURI();
       final var method = req.getMethod();
       // primitive routing
-      if (method.equals("GET") && path.equals("/api/posts")) {
+      if (method.equals(GET) && path.equals(POSTS_PATH)) {
         controller.all(resp);
         return;
       }
-      if (method.equals("GET") && path.matches("/api/posts/\\d+")) {
+      if (method.equals(GET) && path.matches(POST_PATH)) {
         // easy way
-        final var id = Long.parseLong(path.substring(path.lastIndexOf("/")));
+        final var id = Long.parseLong(path.substring(path.lastIndexOf(DELIMITER)));
         controller.getById(id, resp);
         return;
       }
-      if (method.equals("POST") && path.equals("/api/posts")) {
+      if (method.equals(POST) && path.equals(POSTS_PATH)) {
         controller.save(req.getReader(), resp);
         return;
       }
-      if (method.equals("DELETE") && path.matches("/api/posts/\\d+")) {
+      if (method.equals(DELETE) && path.matches(POST_PATH)) {
         // easy way
-        final var id = Long.parseLong(path.substring(path.lastIndexOf("/")));
+        final var id = Long.parseLong(path.substring(path.lastIndexOf(DELIMITER)));
         controller.removeById(id, resp);
         return;
       }
