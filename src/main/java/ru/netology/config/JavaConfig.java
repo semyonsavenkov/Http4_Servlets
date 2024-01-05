@@ -20,7 +20,7 @@ public class JavaConfig {
     }
 
     @Bean
-    public PostRepository postService() {
+    public PostRepository PostRepository() {
         return new PostRepository();
     }
 

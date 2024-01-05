@@ -11,7 +11,6 @@ import java.util.concurrent.atomic.AtomicLong;
 import main.java.ru.netology.exception.NotFoundException;
 
 // Stub
-@Repository
 public class PostRepository {
 
     private final ConcurrentHashMap<Long, Post> mapOfPosts = new ConcurrentHashMap<>();

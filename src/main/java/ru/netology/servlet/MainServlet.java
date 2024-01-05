@@ -22,7 +22,7 @@ public class MainServlet extends HttpServlet {
   @Override
   public void init() {
     final var context = new AnnotationConfigApplicationContext(JavaConfig.class);
-    final var service = context.getBean("postService");
+   this.controller = (PostController) context.getBean("postController");
   }
 
   @Override
